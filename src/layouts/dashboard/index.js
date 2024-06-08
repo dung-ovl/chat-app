@@ -75,6 +75,7 @@ const DashboardLayout = () => {
 
       socket.on("new_message", (data) => {
         const message = data.message;
+        console.log("receive new message");
         console.log(current_conversation, data);
         // check if msg we got is from currently selected conversation
         if (current_conversation?.id === data.conversation_id) {
@@ -130,7 +131,7 @@ const DashboardLayout = () => {
       });
     }
 
-    // Remove event listener on component unmount
+    //Remove event listener on component unmount
     return () => {
       socket?.off("new_friend_request");
       socket?.off("request_accepted");
