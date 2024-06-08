@@ -5,18 +5,18 @@ import { Box, Stack, Typography } from "@mui/material";
 import { Link, useSearchParams } from "react-router-dom";
 import ChatComponent from "./Conversation";
 import Chats from "./Chats";
-import Contact from "../../sections/Dashboard/Contact";
+import Contact from "../../sections/dashboard/Contact";
 import NoChat from "../../assets/Illustration/NoChat";
 import { useSelector } from "react-redux";
-import StarredMessages from "../../sections/Dashboard/StarredMessages";
-import Media from "../../sections/Dashboard/SharedMessages";
+import StarredMessages from "../../sections/dashboard/StarredMessages";
+import Media from "../../sections/dashboard/SharedMessages";
 
 const GeneralApp = () => {
   const [searchParams] = useSearchParams();
 
   const theme = useTheme();
 
-  const { sideBar } = useSelector((state) => state.app);
+  const { sideBar, room_id, chat_type } = useSelector((state) => state.app);
 
   return (
     <>
@@ -39,8 +39,8 @@ const GeneralApp = () => {
                 : "6px solid #0162C4",
           }}
         >
-          {searchParams.get("type") === "individual-chat" &&
-          searchParams.get("id") ? (
+          {chat_type === "individual" &&
+          room_id !== null ? (
             <ChatComponent />
           ) : (
             <Stack
@@ -65,28 +65,22 @@ const GeneralApp = () => {
             </Stack>
           )}
         </Box>
-        {
-          sideBar.open &&
-            (() => {
-              switch (sideBar.type) {
-                case "CONTACT":
-                  return <Contact />;
+        {sideBar.open &&
+          (() => {
+            switch (sideBar.type) {
+              case "CONTACT":
+                return <Contact />;
 
-                case "STARRED":
-                  return <StarredMessages />;
+              case "STARRED":
+                return <StarredMessages />;
 
-                case "SHARED":
-                  return <Media />;
+              case "SHARED":
+                return <Media />;
 
-                default:
-                  break;
-              }
-            })()
-          //  Contact Info
-          //
-
-          //
-        }
+              default:
+                break;
+            }
+          })()}
       </Stack>
     </>
   );

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import { useSearchParams } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -9,6 +8,12 @@ import {
   IconButton,
   Stack,
   Typography,
+  Slide,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { faker } from "@faker-js/faker";
 import {
@@ -23,15 +28,77 @@ import {
 } from "phosphor-react";
 import useResponsive from "../../hooks/useResponsive";
 import AntSwitch from "../../components/AntSwitch";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToggleSidebar, UpdateSidebarType } from "../../redux/slices/app";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const BlockDialog = ({ open, handleClose }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Block this contact</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure you want to block this Contact?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Yes</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const DeleteChatDialog = ({ open, handleClose }) => {
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Delete this chat</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+          Are you sure you want to delete this chat?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Yes</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
 
 const Contact = () => {
   const dispatch = useDispatch();
 
+  const {current_conversation} = useSelector((state) => state.conversation.direct_chat);
+
   const theme = useTheme();
 
   const isDesktop = useResponsive("up", "md");
+
+  const [openBlock, setOpenBlock] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handleCloseBlock = () => {
+    setOpenBlock(false);
+  }
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  }
 
   return (
     <Box sx={{ width: !isDesktop ? "100vw" : 320, maxHeight: "100vh" }}>
@@ -75,13 +142,13 @@ const Contact = () => {
         >
           <Stack alignItems="center" direction="row" spacing={2}>
             <Avatar
-              src={faker.image.avatar()}
-              alt={faker.name.firstName()}
+              src={current_conversation?.img}
+              alt={current_conversation?.name}
               sx={{ height: 64, width: 64 }}
             />
             <Stack spacing={0.5}>
               <Typography variant="article" fontWeight={600}>
-                {faker.name.fullName()}
+                {current_conversation?.name}
               </Typography>
               <Typography variant="body2" fontWeight={500}>
                 {"+91 62543 28 739"}
@@ -104,7 +171,6 @@ const Contact = () => {
               <IconButton>
                 <VideoCamera />
               </IconButton>
-
               <Typography variant="overline">Video</Typography>
             </Stack>
           </Stack>
@@ -114,7 +180,7 @@ const Contact = () => {
               About
             </Typography>
             <Typography variant="body2" fontWeight={500}>
-              {"Imagination is the only limit"}
+              {current_conversation?.about}
             </Typography>
           </Stack>
           <Divider />
@@ -185,15 +251,31 @@ const Contact = () => {
           </Stack>
           <Divider />
           <Stack direction="row" alignItems={"center"} spacing={2}>
-            <Button fullWidth startIcon={<Prohibit />} variant="outlined">
+            <Button
+              onClick={() => {
+                setOpenBlock(true);
+              }}
+              fullWidth
+              startIcon={<Prohibit />}
+              variant="outlined"
+            >
               Block
             </Button>
-            <Button fullWidth startIcon={<Trash />} variant="outlined">
+            <Button
+              onClick={() => {
+                setOpenDelete(true);
+              }}
+              fullWidth
+              startIcon={<Trash />}
+              variant="outlined"
+            >
               Delete
             </Button>
           </Stack>
         </Stack>
       </Stack>
+      {openBlock && <BlockDialog open={openBlock} handleClose={handleCloseBlock} />}
+      {openDelete && <DeleteChatDialog open={openDelete} handleClose={handleCloseDelete} />}
     </Box>
   );
 };

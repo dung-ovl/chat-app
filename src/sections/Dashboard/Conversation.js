@@ -13,6 +13,8 @@ import { DotsThreeVertical, DownloadSimple, Image } from "phosphor-react";
 import { Message_options } from "../../data";
 import { Link } from "react-router-dom";
 import truncateString from "../../utils/truncate";
+import { LinkPreview } from "@dhaiwat10/react-link-preview";
+import Embed from "react-embed";
 
 const MessageOption = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,7 +54,7 @@ const MessageOption = () => {
   );
 };
 
-const TextMsg = ({ el }) => {
+const TextMsg = ({ el, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={el.incoming ? "start" : "end"}>
@@ -74,11 +76,11 @@ const TextMsg = ({ el }) => {
           {el.message}
         </Typography>
       </Box>
-      <MessageOption />
+      {menu && <MessageOption />}
     </Stack>
   );
 };
-const MediaMsg = ({ el }) => {
+const MediaMsg = ({ el, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={el.incoming ? "start" : "end"}>
@@ -107,11 +109,11 @@ const MediaMsg = ({ el }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOption />
+      {menu && <MessageOption />}
     </Stack>
   );
 };
-const DocMsg = ({ el }) => {
+const DocMsg = ({ el, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={el.incoming ? "start" : "end"}>
@@ -151,11 +153,11 @@ const DocMsg = ({ el }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOption />
+      {menu && <MessageOption />}
     </Stack>
   );
 };
-const LinkMsg = ({ el }) => {
+const LinkMsg = ({ el, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={el.incoming ? "start" : "end"}>
@@ -181,38 +183,27 @@ const LinkMsg = ({ el }) => {
               borderRadius: 1,
             }}
           >
-            <img
-              src={el.preview}
-              alt={el.message}
-              style={{ maxHeight: 210, borderRadius: "10px" }}
-            />
             <Stack direction={"column"} spacing={2}>
-              <Typography variant="subtitle2" textAlign={"start"}>
-                Creating Chat App using MERN
-              </Typography>
-              <Typography
-                component={Link}
-                to="//https://www.youtube.com"
-                variant="subtitle2"
-                sx={{ color: theme.palette.primary.main }}
-              >
-                {truncateString("www.youtube.com/watch/v12uqywHTY2", 16)}
-              </Typography>
+              <Embed
+                width="300px"
+                isDark
+                url={`https://youtu.be/xoWxBR34qLE`}
+              />
             </Stack>
           </Stack>
           <Typography
             variant="body2"
             color={el.incoming ? theme.palette.text : "#fff"}
           >
-            {el.message}
+            <div dangerouslySetInnerHTML={{ __html: el.message }}></div>
           </Typography>
         </Stack>
       </Box>
-      <MessageOption />
+      {menu && <MessageOption />}
     </Stack>
   );
 };
-const ReplyMsg = ({ el }) => {
+const ReplyMsg = ({ el, menu }) => {
   const theme = useTheme();
   return (
     <Stack direction="row" justifyContent={el.incoming ? "start" : "end"}>
@@ -251,7 +242,7 @@ const ReplyMsg = ({ el }) => {
           </Typography>
         </Stack>
       </Box>
-      <MessageOption />
+      {menu && <MessageOption />}
     </Stack>
   );
 };
