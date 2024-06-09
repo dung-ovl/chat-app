@@ -99,7 +99,11 @@ const ConversationHeader = ({ otherUser }) => {
           spacing={1}
         >
           {/* video call action */}
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              HandleSend(ZegoUIKitPrebuilt.InvitationTypeVideoCall, zego);
+            }}
+          >
             <VideoCamera />
           </IconButton>
 

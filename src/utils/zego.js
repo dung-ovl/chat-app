@@ -27,7 +27,7 @@ const connectZego = (user_id, userName) => {
     );
     zego = ZegoUIKitPrebuilt.create(KitToken);
     // add plugin
-    //zego.addPlugins({ ZIM });
+    zego.addPlugins({ ZIM });
   });
 };
 
