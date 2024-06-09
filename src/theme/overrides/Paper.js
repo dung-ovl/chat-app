@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Paper(theme) {
   return {
     MuiPaper: {

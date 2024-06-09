@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
-// @mui
 import { Box } from '@mui/material';
-//
-import { varFade } from './variants';
-
-// ----------------------------------------------------------------------
+import { varFade } from './varients';
 
 TextAnimate.propTypes = {
   text: PropTypes.string.isRequired,
   variants: PropTypes.object,
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };
 
 export default function TextAnimate({ text, variants, sx, ...other }) {
@@ -21,7 +17,7 @@ export default function TextAnimate({ text, variants, sx, ...other }) {
         typography: 'h1',
         overflow: 'hidden',
         display: 'inline-flex',
-        ...sx
+        ...sx,
       }}
       {...other}
     >

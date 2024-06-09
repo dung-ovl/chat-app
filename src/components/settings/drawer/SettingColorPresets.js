@@ -1,12 +1,7 @@
-// @mui
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Grid, RadioGroup, CardActionArea } from '@mui/material';
-// hooks
 import useSettings from '../../../hooks/useSettings';
-//
 import BoxMask from './BoxMask';
-
-// ----------------------------------------------------------------------
 
 const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   height: 48,
@@ -18,13 +13,15 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   borderRadius: Number(theme.shape.borderRadius) * 1.25,
 }));
 
-// ----------------------------------------------------------------------
-
 export default function SettingColorPresets() {
   const { themeColorPresets, onChangeColor, colorOption } = useSettings();
 
   return (
-    <RadioGroup name="themeColorPresets" value={themeColorPresets} onChange={onChangeColor}>
+    <RadioGroup
+      name="themeColorPresets"
+      value={themeColorPresets}
+      onChange={onChangeColor}
+    >
       <Grid dir="ltr" container spacing={1.5}>
         {colorOption.map((color) => {
           const colorName = color.name;

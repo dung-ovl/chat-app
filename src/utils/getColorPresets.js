@@ -1,15 +1,15 @@
-// theme
 import palette from "../theme/palette";
 
 export const colorPresets = [
-  // DEFAULT
+  // DEFAULT PRESET
   {
     name: "default",
     ...palette.light.primary,
   },
-  // PURPLE
+  // PURPLE PRESET
   {
     name: "purple",
+    lighterFaded: "#200A6940",
     lighter: "#EBD6FD",
     light: "#B985F4",
     main: "#7635dc",
@@ -17,9 +17,10 @@ export const colorPresets = [
     darker: "#200A69",
     contrastText: "#fff",
   },
-  // CYAN
+  // CYAN PRESET
   {
     name: "cyan",
+    lighterFaded: "#053D7A40",
     lighter: "#D1FFFC",
     light: "#76F2FF",
     main: "#1CCAFF",
@@ -27,9 +28,10 @@ export const colorPresets = [
     darker: "#053D7A",
     contrastText: palette.light.grey[800],
   },
-  // BLUE
+  // BLUE PRESET
   {
     name: "blue",
+    lighterFaded: "#061B6440",
     lighter: "#D1E9FC",
     light: "#76B0F1",
     main: "#2065D1",
@@ -38,9 +40,10 @@ export const colorPresets = [
 
     contrastText: "#fff",
   },
-  // ORANGE
+  // ORANGE PRESET
   {
     name: "orange",
+    lighterFaded: "#79390840",
     lighter: "#FEF4D4",
     light: "#FED680",
     main: "#fda92d",
@@ -48,9 +51,10 @@ export const colorPresets = [
     darker: "#793908",
     contrastText: palette.light.grey[800],
   },
-  // RED
+  // RED PRESET
   {
     name: "red",
+    lighterFaded: "#7A093040",
     lighter: "#FFE3D5",
     light: "#FFC1AC",
     main: "#FF3030",

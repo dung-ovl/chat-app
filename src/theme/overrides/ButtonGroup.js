@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function ButtonGroup(theme) {
   const styleContained = (color) => ({
     props: { variant: 'contained', color },

@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Radio(theme) {
   return {
     MuiRadio: {

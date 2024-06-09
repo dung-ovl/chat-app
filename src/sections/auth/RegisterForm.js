@@ -1,80 +1,93 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as Yup from "yup";
-// form
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-// @mui
-import { Link, Stack, Alert, IconButton, InputAdornment } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-// components
-import FormProvider, { RHFTextField } from "../../components/hook-form";
+import {
+  IconButton,
+  InputAdornment,
+  Stack,
+  useMediaQuery,
+} from "@mui/material";
 import { Eye, EyeSlash } from "phosphor-react";
+import { LoadingButton } from "@mui/lab";
+
+// redux imports
 import { useDispatch, useSelector } from "react-redux";
-import { RegisterUser } from "../../redux/slices/auth";
+import { RegisterUser } from "../../redux/slices/actions/authActions";
 
-// ----------------------------------------------------------------------
+import FormProvider, { RHFTextField } from "../../components/hook-form";
 
-export default function AuthRegisterForm() {
+const RegisterForm = () => {
+  // dispatch from redux
+  const { isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const {isLoading} = useSelector((state) => state.auth);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const LoginSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name required"),
-    lastName: Yup.string().required("Last name required"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is required"),
+  // hide and show password controller
+  const [showPassword, setShowPassword] = useState(false);
+  const recaptchaRef = useRef(null);
+
+  //  Register Schema
+  const RegisterSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .required("First Name Required")
+      .min(3, "First Name must be atleast 3 charaters long")
+      .max(16, "First Name cannot be more than 16 characters long")
+      .matches(/^[a-zA-Z]+$/, "Name can only contain alphabets"),
+    lastName: Yup.string()
+      .required("Last Name Required")
+      .min(3, "Last Name must be atleast 3 charaters long")
+      .max(16, "Last Name cannot be more than 16 characters long")
+      .matches(/^[a-zA-Z]+$/, "Name can only contain alphabets"),
+
+    email: Yup.string().required("Email Required").email("Invalid Email"),
+
+    password: Yup.string()
+      .required("Password Required")
+      .min(8, "Password must be 8 characters long"),
   });
 
+  //   Labels
   const defaultValues = {
     firstName: "",
     lastName: "",
-    email: "demo@tawk.com",
-    password: "demo1234",
+    email: "",
+    password: "",
   };
 
   const methods = useForm({
-    resolver: yupResolver(LoginSchema),
+    mode: "onChange",
+    resolver: yupResolver(RegisterSchema),
     defaultValues,
   });
 
-  const {
-    reset,
-    setError,
-    handleSubmit,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data) => {
     try {
-      // submit data to backend
-      dispatch(RegisterUser(data));
+      // api request to backend for registering user using redux
+      dispatch(RegisterUser({ ...data }));
+      console.log(data);
     } catch (error) {
       console.error(error);
-      reset();
-      setError("afterSubmit", {
-        ...error,
-        message: error.message,
-      });
     }
   };
 
+  // breakpoint
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3} mb={4}>
-        {!!errors.afterSubmit && (
-          <Alert severity="error">{errors.afterSubmit.message}</Alert>
-        )}
-
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
+      <Stack spacing={isSmallScreen ? 0 : 3}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          alignItems={"center"}
+          spacing={isSmallScreen ? 0 : 2}
+          justifyContent={"center"}
+        >
+          <RHFTextField name="firstName" label="First Name" />
+          <RHFTextField name="lastName" label="Last Name" />
         </Stack>
-
-        <RHFTextField name="email" label="Email address" />
-
+        <RHFTextField name="email" label="Email" />
         <RHFTextField
           name="password"
           label="Password"
@@ -83,8 +96,9 @@ export default function AuthRegisterForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                 >
                   {showPassword ? <Eye /> : <EyeSlash />}
                 </IconButton>
@@ -92,28 +106,30 @@ export default function AuthRegisterForm() {
             ),
           }}
         />
-      </Stack>
 
-      <LoadingButton
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isLoading}
-        sx={{
-          bgcolor: "text.primary",
-          color: (theme) =>
-            theme.palette.mode === "light" ? "common.white" : "grey.800",
-          "&:hover": {
+        <LoadingButton
+          loading={isLoading}
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          sx={{
+            mt: 3,
             bgcolor: "text.primary",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
-          },
-        }}
-      >
-        Create Account
-      </LoadingButton>
+            "&:hover": {
+              bgcolor: "text.primary",
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
+          }}
+        >
+          Register
+        </LoadingButton>
+      </Stack>
     </FormProvider>
   );
-}
+};
+
+export default RegisterForm;

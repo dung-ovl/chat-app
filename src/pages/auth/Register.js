@@ -1,46 +1,47 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-// @mui
-import { Stack, Typography, Link } from '@mui/material';
+import { Link, Stack, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 import RegisterForm from "../../sections/auth/RegisterForm";
-import AuthSocial from '../../sections/auth/AuthSocial';
+import AuthSocial from "../../sections/auth/AuthSocial";
 
-// ----------------------------------------------------------------------
-
-export default function Register() {
+const Register = () => {
   return (
-    <>
-      <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-        <Typography variant="h4">Get started with Tawk.</Typography>
-
-        <Stack direction="row" spacing={0.5}>
-          <Typography variant="body2"> Already have an account? </Typography>
-
-          <Link component={RouterLink} to={"/auth/login"} variant="subtitle2">
-            Sign in
+    <Stack spacing={2} sx={{ my: 5, position: "realative" }}>
+      <Stack justifyContent={"center"} alignItems={"center"} spacing={1}>
+        <Typography component={"h1"} variant="h4">
+          Let's Get You Registered
+        </Typography>
+        <Stack direction={"row"} spacing={0.5}>
+          <Typography variant="body2">Already Registered?</Typography>
+          <Link to="/auth/login" component={RouterLink} variant="subtitle2">
+            Sign In
           </Link>
         </Stack>
       </Stack>
-      {/* Form */}
-      <RegisterForm  />
 
+      {/* Form Section */}
+      <RegisterForm />
+
+      {/* Terms and Conditions */}
       <Typography
-        component="div"
-        sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
+        component={"div"}
+        sx={{
+          color: "text.secondary",
+          mt: 3,
+          typography: "caption",
+          textAlign: "center",
+        }}
       >
-        {'By signing up, I agree to '}
-        <Link underline="always" color="text.primary">
-          Terms of Service
+        {"By creating an account"} <br /> {"You agree to the "}
+        <Link to="/auth/login" component={RouterLink} underline="hover">
+          Terms and Conditions
         </Link>
-        {' and '}
-        <Link underline="always" color="text.primary">
-          Privacy Policy
-        </Link>
-        .
       </Typography>
 
-     <AuthSocial />
-      </>
+      {/* Auth Social login */}
+      <AuthSocial />
+    </Stack>
   );
-}
+};
+
+export default Register;

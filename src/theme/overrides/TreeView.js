@@ -1,14 +1,24 @@
-import { TreeViewCollapseIcon, TreeViewExpandIcon, TreeViewEndIcon } from './CustomIcons';
-
-// ----------------------------------------------------------------------
+import {
+  TreeViewCollapseIcon,
+  TreeViewExpandIcon,
+  TreeViewEndIcon,
+} from './CustomIcons';
 
 export default function TreeView(theme) {
   return {
     MuiTreeView: {
       defaultProps: {
-        defaultCollapseIcon: <TreeViewCollapseIcon sx={{ width: 20, height: 20 }} />,
-        defaultExpandIcon: <TreeViewExpandIcon sx={{ width: 20, height: 20 }} />,
-        defaultEndIcon: <TreeViewEndIcon sx={{ color: 'text.secondary', width: 20, height: 20 }} />,
+        defaultCollapseIcon: (
+          <TreeViewCollapseIcon sx={{ width: 20, height: 20 }} />
+        ),
+        defaultExpandIcon: (
+          <TreeViewExpandIcon sx={{ width: 20, height: 20 }} />
+        ),
+        defaultEndIcon: (
+          <TreeViewEndIcon
+            sx={{ color: 'text.secondary', width: 20, height: 20 }}
+          />
+        ),
       },
     },
     MuiTreeItem: {

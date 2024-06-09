@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function LoadingButton() {
   return {
     MuiLoadingButton: {

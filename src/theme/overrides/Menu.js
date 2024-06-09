@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Menu(theme) {
   return {
     MuiMenuItem: {

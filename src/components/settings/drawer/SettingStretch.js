@@ -1,12 +1,7 @@
-// @mui
 import { styled } from '@mui/material/styles';
 import { CardActionArea, Stack } from '@mui/material';
-// hooks
 import useSettings from '../../../hooks/useSettings';
-//
 import Iconify from '../../Iconify';
-
-// ----------------------------------------------------------------------
 
 const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -15,8 +10,6 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   backgroundColor: theme.palette.background.neutral,
   borderRadius: Number(theme.shape.borderRadius) * 1.25,
 }));
-
-// ----------------------------------------------------------------------
 
 export default function SettingStretch() {
   const { themeStretch, onToggleStretch } = useSettings();
@@ -55,8 +48,22 @@ export default function SettingStretch() {
           }),
         }}
       >
-        <Iconify icon={themeStretch ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'} {...ICON_SIZE} />
-        <Iconify icon={themeStretch ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'} {...ICON_SIZE} />
+        <Iconify
+          icon={
+            themeStretch
+              ? 'eva:arrow-ios-back-fill'
+              : 'eva:arrow-ios-forward-fill'
+          }
+          {...ICON_SIZE}
+        />
+        <Iconify
+          icon={
+            themeStretch
+              ? 'eva:arrow-ios-forward-fill'
+              : 'eva:arrow-ios-back-fill'
+          }
+          {...ICON_SIZE}
+        />
       </Stack>
     </BoxStyle>
   );

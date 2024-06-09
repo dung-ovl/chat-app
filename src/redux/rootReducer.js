@@ -1,28 +1,26 @@
-import { combineReducers } from 'redux';
-import storage from 'redux-persist/lib/storage';
-// slices
-import appReducer from './slices/app';
-import audioCallReducer from './slices/audioCall';
-import videoCallReducer from './slices/videoCall';
-import authReducer from './slices/auth';
-import conversationReducer from './slices/conversation';
-
-// ----------------------------------------------------------------------
+import { combineReducers } from "redux";
+import storage from "redux-persist/lib/storage";
+import {
+  authReducer,
+  chatReducer,
+  contactReducer,
+  userReducer,
+} from "./slices";
 
 const rootPersistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  keyPrefix: 'redux-',
-  //   whitelist: [],
-  //   blacklist: [],
+  keyPrefix: "redux-",
+  // allow or disallow a slice to persist
+  // whitelist: []
+  // blacklist: []
 };
 
 const rootReducer = combineReducers({
-  app: appReducer,
+  user: userReducer,
   auth: authReducer,
-  conversation: conversationReducer,
-  audioCall: audioCallReducer,
-  videoCall: videoCallReducer,
+  chat: chatReducer,
+  contact: contactReducer,
 });
 
 export { rootPersistConfig, rootReducer };

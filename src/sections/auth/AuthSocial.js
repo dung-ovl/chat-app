@@ -1,52 +1,85 @@
-// @mui
-import { Divider, IconButton, Stack } from '@mui/material';
-import { GithubLogo, GoogleLogo, TwitterLogo } from 'phosphor-react';
+import { Divider, IconButton, Stack } from "@mui/material";
+import { GithubLogo, GoogleLogo } from "phosphor-react";
 
-// ----------------------------------------------------------------------
+import { useDispatch } from "react-redux";
+import {
+  GithubLogin,
+  GoogleLogin,
+  LinkedinLogin,
+} from "../../redux/slices/actions/authActions";
 
-export default function AuthSocial() {
+import { getOAuthCode } from "../../utils/socialLoginHelpers";
+import Iconify from "../../components/Iconify";
+import { ShowSnackbar } from "../../redux/slices/userSlice";
 
+const AuthSocial = () => {
+  const dispatch = useDispatch();
 
-  const handleGoogleLogin = async () => {
+  const baseURL = window.location.origin;
 
+  // ---------- inner functions ----------
+
+  const showSnackbar = (socialType) => {
+    dispatch(
+      ShowSnackbar({
+        severity: "error",
+        message: `Unable to login using ${socialType}`,
+      })
+    );
   };
 
-  const handleGithubLogin = async () => {
-    
+  const githubLogin = async () => {
+    try {
+      const code = await getOAuthCode(
+        `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_AUTH_CLIENT_ID}&scope=user`
+      );
+
+      dispatch(GithubLogin(code));
+    } catch (error) {
+      showSnackbar("github");
+      console.log("Github Error:", error.message);
+    }
   };
 
-  const handleTwitterLogin = async () => {
-    
+  const linkedinLogin = async () => {
+    try {
+      const code = await getOAuthCode(
+        `https://linkedin.com/oauth/v2/authorization?client_id=${process.env.REACT_APP_LINKEDIN_AUTH_CLIENT_ID}&response_type=code&scope=email profile openid&redirect_uri=${baseURL}/auth/login`
+      );
+
+      dispatch(LinkedinLogin(code));
+    } catch (error) {
+      showSnackbar("linkedin");
+      console.log("Linkedin Error:", error.message);
+    }
   };
+
+  // -------------------------------------
 
   return (
-    <div>
+    <>
       <Divider
         sx={{
           my: 2.5,
-          typography: 'overline',
-          color: 'text.disabled',
-          '&::before, ::after': {
-            borderTopStyle: 'dashed',
-          },
+          typography: "overline",
+          color: "text.disabled",
         }}
       >
         OR
       </Divider>
-
-      <Stack direction="row" justifyContent="center" spacing={2}>
-        <IconButton onClick={handleGoogleLogin}>
+      <Stack direction={"row"} spacing={2} justifyContent={"center"}>
+        <IconButton onClick={() => {}}>
           <GoogleLogo color="#DF3E30" />
         </IconButton>
-
-        <IconButton color="inherit" onClick={handleGithubLogin}>
+        <IconButton color="inherit" onClick={() => githubLogin()}>
           <GithubLogo />
         </IconButton>
-
-        <IconButton onClick={handleTwitterLogin}>
-          <TwitterLogo color="#1C9CEA" />
+        <IconButton onClick={() => linkedinLogin()}>
+          <Iconify icon={"ri:linkedin-line"} color="#1C9CEA" />
         </IconButton>
       </Stack>
-    </div>
+    </>
   );
-}
+};
+
+export default AuthSocial;

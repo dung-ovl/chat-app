@@ -1,13 +1,8 @@
-// @mui
 import { styled } from '@mui/material/styles';
 import { Grid, RadioGroup, CardActionArea } from '@mui/material';
-// hooks
 import useSettings from '../../../hooks/useSettings';
-//
 import Iconify from '../../Iconify';
 import BoxMask from './BoxMask';
-
-// ----------------------------------------------------------------------
 
 const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   height: 72,
@@ -18,8 +13,6 @@ const BoxStyle = styled(CardActionArea)(({ theme }) => ({
   border: `solid 1px ${theme.palette.grey[500_12]}`,
   borderRadius: Number(theme.shape.borderRadius) * 1.25,
 }));
-
-// ----------------------------------------------------------------------
 
 export default function SettingMode() {
   const { themeMode, onChangeMode } = useSettings();
@@ -41,7 +34,11 @@ export default function SettingMode() {
                   }),
                 }}
               >
-                <Iconify icon={index === 0 ? 'ph:sun-duotone' : 'ph:moon-duotone'} width={28} height={28} />
+                <Iconify
+                  icon={index === 0 ? 'ph:sun-duotone' : 'ph:moon-duotone'}
+                  width={28}
+                  height={28}
+                />
                 <BoxMask value={mode} />
               </BoxStyle>
             </Grid>

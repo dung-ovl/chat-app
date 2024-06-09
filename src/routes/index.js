@@ -1,13 +1,11 @@
 import { Suspense, lazy } from "react";
-import { Navigate, useRoutes } from "react-router-dom";
+import { useRoutes, Navigate } from "react-router-dom";
 
-// layouts
+import LoadingScreen from "../components/LoadingScreen";
+import { DEFAULT_AUTH, DEFAULT_DOCS, DEFAULT_PATH } from "../config";
 import DashboardLayout from "../layouts/dashboard";
 import AuthLayout from "../layouts/auth";
-
-// config
-import { DEFAULT_PATH } from "../config";
-import LoadingScreen from "../components/LoadingScreen";
+import DocsLayout from "../layouts/docs";
 
 const Loadable = (Component) => (props) => {
   return (
@@ -23,11 +21,21 @@ export default function Router() {
       path: "/auth",
       element: <AuthLayout />,
       children: [
+        { element: <Navigate to={DEFAULT_AUTH} replace />, index: true },
+        { path: "welcome", element: <WelcomePage /> },
         { path: "login", element: <LoginPage /> },
         { path: "register", element: <RegisterPage /> },
+        { path: "verify", element: <VerifyPage /> },
+        { path: "forgot-password", element: <ForgotPasswordPage /> },
         { path: "reset-password", element: <ResetPasswordPage /> },
-        { path: "new-password", element: <NewPasswordPage /> },
-        {path: "verify", element: <VerifyPage /> },
+      ],
+    },
+    {
+      path: "/docs",
+      element: <DocsLayout />,
+      children: [
+        { element: <Navigate to={DEFAULT_DOCS} replace />, index: true },
+        { path: "tnc", element: <TnCPage /> },
       ],
     },
     {
@@ -36,48 +44,40 @@ export default function Router() {
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: "app", element: <GeneralApp /> },
-        { path: "group", element: <Group /> },
+        { path: "group", element: <GroupChat /> },
+        { path: "profile", element: <ProfilePage /> },
+        { path: "contact", element: <ContactPage /> },
         { path: "settings", element: <Settings /> },
-        { path: "conversation", element: <Conversation /> },
-        { path: "chats", element: <Chats /> },
-        { path: "contact", element: <Contact /> },
-        { path: "profile", element: <Profile /> },
 
-        {path: "call", element: <CallPage />},
-        
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
       ],
     },
-
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }
-
+// app pages
 const GeneralApp = Loadable(
   lazy(() => import("../pages/dashboard/GeneralApp"))
 );
-const Conversation = Loadable(
-  lazy(() => import("../pages/dashboard/Conversation"))
-);
-const Chats = Loadable(lazy(() => import("../pages/dashboard/Chats")));
-const Group = Loadable(lazy(() => import("../pages/dashboard/Group")));
-const CallPage = Loadable(lazy(() => import("../pages/dashboard/Call")));
-const Contact = Loadable(lazy(() => import("../sections/dashboard/Contact")));
-const Page404 = Loadable(lazy(() => import("../pages/Page404")));
+const GroupChat = Loadable(lazy(() => import("../pages/dashboard/GroupChat")));
+const ProfilePage = Loadable(lazy(() => import("../pages/dashboard/Profile")));
+const ContactPage = Loadable(lazy(() => import("../pages/dashboard/Contact")));
+const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
 
+// auth pages
+const WelcomePage = Loadable(lazy(() => import("../pages/auth/WelcomePage")));
 const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
-const VerifyPage = Loadable(lazy(() => import("../pages/auth/Verify")));
 const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register")));
+const VerifyPage = Loadable(lazy(() => import("../pages/auth/Verify")));
+const ForgotPasswordPage = Loadable(
+  lazy(() => import("../pages/auth/ForgotPassword"))
+);
 const ResetPasswordPage = Loadable(
   lazy(() => import("../pages/auth/ResetPassword"))
 );
-const NewPasswordPage = Loadable(
-  lazy(() => import("../pages/auth/NewPassword"))
-);
 
-// Settings
-const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
-const Profile = Loadable(
-  lazy(() => import("../pages/dashboard/Settings/Profile"))
-);
+// docs pages
+const TnCPage = Loadable(lazy(() => import("../pages/docs/TnC")));
+
+const Page404 = Loadable(lazy(() => import("../pages/404")));

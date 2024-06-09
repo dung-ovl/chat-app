@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Dialog(theme) {
   return {
     MuiDialog: {

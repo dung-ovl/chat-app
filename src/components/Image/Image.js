@@ -1,20 +1,20 @@
-import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import PropTypes from "prop-types";
+import { forwardRef } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 // @mui
-import { Box } from '@mui/material';
-
-// ----------------------------------------------------------------------
+import { Box } from "@mui/material";
 
 const Image = forwardRef(
-  ({ disabledEffect = false, effect = 'blur', sx, ...other }, ref) => {
+  ({ disabledEffect = false, effect = "blur", sx, ...other }, ref) => {
     const content = (
       <Box
         component={LazyLoadImage}
         wrapperClassName="wrapper"
         effect={disabledEffect ? undefined : effect}
-        placeholderSrc={disabledEffect ? '/assets/transparent.png' : '/assets/placeholder.svg'}
-        sx={{ width: 1, height: 1, objectFit: 'cover' }}
+        placeholderSrc={
+          disabledEffect ? "/assets/transparent.png" : "/assets/placeholder.svg"
+        }
+        sx={{ width: 1, height: 1, objectFit: "cover" }}
         {...other}
       />
     );
@@ -25,13 +25,13 @@ const Image = forwardRef(
         component="span"
         sx={{
           lineHeight: 1,
-          display: 'block',
-          overflow: 'hidden',
-          position: 'relative',
-          '& .wrapper': {
+          display: "block",
+          overflow: "hidden",
+          position: "relative",
+          "& .wrapper": {
             width: 1,
             height: 1,
-            backgroundSize: 'cover !important',
+            backgroundSize: "cover !important",
           },
           ...sx,
         }}

@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Fab(theme) {
   return {
     MuiFab: {

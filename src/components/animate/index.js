@@ -1,9 +1,7 @@
-// ----------------------------------------------------------------------
+export * from './varients';
 
-export * from './variants';
-
-export { default as DialogAnimate } from './DialogAnimate';
 export { default as TextAnimate } from './TextAnimate';
+export { default as DialogAnimate } from './DialogAnimate';
 
 export { default as FabButtonAnimate } from './FabButtonAnimate';
 export { default as IconButtonAnimate } from './IconButtonAnimate';

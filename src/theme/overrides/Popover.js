@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Popover(theme) {
   return {
     MuiPopover: {

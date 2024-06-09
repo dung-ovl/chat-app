@@ -1,14 +1,15 @@
 import { alpha } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
 export default function ToggleButton(theme) {
   const style = (color) => ({
     props: { color },
     style: {
       '&:hover': {
         borderColor: alpha(theme.palette[color].main, 0.48),
-        backgroundColor: alpha(theme.palette[color].main, theme.palette.action.hoverOpacity),
+        backgroundColor: alpha(
+          theme.palette[color].main,
+          theme.palette.action.hoverOpacity
+        ),
       },
       '&.Mui-selected': {
         borderColor: alpha(theme.palette[color].main, 0.48),

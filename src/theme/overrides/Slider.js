@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function Slider(theme) {
   const isLight = theme.palette.mode === 'light';
 

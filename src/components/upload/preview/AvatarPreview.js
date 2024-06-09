@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types';
-//
-import Image from '../../Image';
+import PropTypes from "prop-types";
 
-// ----------------------------------------------------------------------
+import Image from "../../Image";
 
 AvatarPreview.propTypes = {
   file: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -13,7 +11,7 @@ export default function AvatarPreview({ file }) {
     return null;
   }
 
-  const imgUrl = typeof file === 'string' ? file : file.preview;
+  const imgUrl = typeof file === "string" ? file : file.preview;
 
   return (
     <Image
@@ -21,9 +19,9 @@ export default function AvatarPreview({ file }) {
       src={imgUrl}
       sx={{
         zIndex: 8,
-        overflow: 'hidden',
-        borderRadius: '50%',
-        position: 'absolute',
+        overflow: "hidden",
+        borderRadius: "50%",
+        position: "absolute",
         width: `calc(100% - 16px)`,
         height: `calc(100% - 16px)`,
       }}

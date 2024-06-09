@@ -1,9 +1,5 @@
-// @mui
 import { alpha } from '@mui/material/styles';
-//
 import palette from './palette';
-
-// ----------------------------------------------------------------------
 
 const LIGHT_MODE = palette.light.grey[500];
 const DARK_MODE = '#000000';
@@ -58,9 +54,15 @@ const createCustomShadow = (color) => {
     warning: `0 8px 16px 0 ${alpha(palette.light.warning.main, 0.24)}`,
     error: `0 8px 16px 0 ${alpha(palette.light.error.main, 0.24)}`,
     //
-    card: `0 0 2px 0 ${alpha(color, 0.2)}, 0 12px 24px -4px ${alpha(color, 0.12)}`,
+    card: `0 0 2px 0 ${alpha(color, 0.2)}, 0 12px 24px -4px ${alpha(
+      color,
+      0.12
+    )}`,
     dialog: `-40px 40px 80px -8px ${alpha(palette.light.common.black, 0.24)}`,
-    dropdown: `0 0 2px 0 ${alpha(color, 0.24)}, -20px 20px 40px -4px ${alpha(color, 0.24)}`,
+    dropdown: `0 0 2px 0 ${alpha(color, 0.24)}, -20px 20px 40px -4px ${alpha(
+      color,
+      0.24
+    )}`,
   };
 };
 

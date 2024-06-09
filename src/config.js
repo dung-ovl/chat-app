@@ -1,18 +1,8 @@
-// @mui
-import { enUS, frFR, zhCN, viVN, arSD } from '@mui/material/locale';
-
-// routes
-import { PATH_DASHBOARD } from "./routes/paths";
-
-export const BASE_URL = "http://localhost:3001/";
-
-export const S3_BUCKET_NAME = 'codingmonk';
-export const AWS_ACCESS_KEY = 'AKIARPJQ4HSYLBIK2TDE';
-export const AWS_SECRET_ACCESS_KEY = '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';
-export const AWS_S3_REGION = 'ap-south-1'; // eg. ap-south-1
+import { enUS, hiIN, frFR, jaJP, viVN, hyAM, arSD } from "@mui/material/locale";
+import { PATH_AUTH, PATH_DASHBOARD, PATH_DOCS } from "./routes/paths";
 
 export const defaultSettings = {
-  themeMode: "light",
+  themeMode: "dark",
   themeDirection: "ltr",
   themeContrast: "default",
   themeLayout: "horizontal",
@@ -24,7 +14,6 @@ export const NAVBAR = {
   BASE_WIDTH: 260,
   DASHBOARD_WIDTH: 280,
   DASHBOARD_COLLAPSE_WIDTH: 88,
-  //
   DASHBOARD_ITEM_ROOT_HEIGHT: 48,
   DASHBOARD_ITEM_SUB_HEIGHT: 40,
   DASHBOARD_ITEM_HORIZONTAL_HEIGHT: 32,
@@ -32,40 +21,51 @@ export const NAVBAR = {
 
 export const allLangs = [
   {
-    label: 'English',
-    value: 'en',
+    label: "English",
+    value: "en",
     systemValue: enUS,
-    icon: '/assets/icons/flags/ic_flag_en.svg',
+    icon: "/assets/icons/flags/flag_en.svg",
   },
   {
-    label: 'French',
-    value: 'fr',
+    label: "Hindi",
+    value: "hi",
+    systemValue: hiIN,
+    icon: "/assets/icons/flags/flag_hi.svg",
+  },
+  {
+    label: "French",
+    value: "fr",
     systemValue: frFR,
-    icon: '/assets/icons/flags/ic_flag_fr.svg',
+    icon: "/assets/icons/flags/flag_fr.svg",
   },
   {
-    label: 'Vietnamese',
-    value: 'vn',
+    label: "Japanese",
+    value: "ja",
+    systemValue: jaJP,
+    icon: "/assets/icons/flags/flag_ja.svg",
+  },
+  {
+    label: "Vietnamese",
+    value: "vn",
     systemValue: viVN,
-    icon: '/assets/icons/flags/ic_flag_vn.svg',
+    icon: "/assets/icons/flags/flag_vn.svg",
   },
   {
-    label: 'Chinese',
-    value: 'cn',
-    systemValue: zhCN,
-    icon: '/assets/icons/flags/ic_flag_cn.svg',
+    label: "Armenian",
+    value: "am",
+    systemValue: hyAM,
+    icon: "/assets/icons/flags/flag_am.svg",
   },
   {
-    label: 'Arabic (Sudan)',
-    value: 'ar',
+    label: "Arabic (Sudan)",
+    value: "ar",
     systemValue: arSD,
-    icon: '/assets/icons/flags/ic_flag_sa.svg',
+    icon: "/assets/icons/flags/flag_am.svg",
   },
 ];
 
-export const defaultLang = allLangs[0]; // English
+export const defaultLang = allLangs[0]; // Default Language => English
 
-
-
-// DEFAULT ROOT PATH
-export const DEFAULT_PATH = PATH_DASHBOARD.general.app; // as '/app'
+export const DEFAULT_PATH = PATH_DASHBOARD.general.app;
+export const DEFAULT_AUTH = PATH_AUTH.general.welcome;
+export const DEFAULT_DOCS = PATH_DOCS.general.docs;

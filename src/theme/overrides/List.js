@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function List(theme) {
   return {
     MuiListItemIcon: {
