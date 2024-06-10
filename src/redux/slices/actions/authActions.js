@@ -224,17 +224,10 @@ export const AddOtpEmail = createAsyncThunk(
 // ------------- Forgot Password Thunk -------------
 export const ForgotPassword = createAsyncThunk(
   "auth/forgot-password",
-  async (
-    { recaptchaRef, ...formValues },
-    { rejectWithValue, dispatch, getState }
-  ) => {
-    // generate recaptcha token
-    const recaptchaToken = await recaptchaRef.current.executeAsync();
-
+  async ({ ...formValues }, { rejectWithValue, dispatch, getState }) => {
     try {
       const { data } = await axios.post("/auth/forgot-password", {
         ...formValues,
-        recaptchaToken,
       });
 
       // show snackbar
