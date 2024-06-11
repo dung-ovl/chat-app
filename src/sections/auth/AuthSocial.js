@@ -1,6 +1,6 @@
 import { Divider, IconButton, Stack } from "@mui/material";
 import { GithubLogo, GoogleLogo } from "phosphor-react";
-
+import { useGoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import {
   GithubLogin,
@@ -27,7 +27,15 @@ const AuthSocial = () => {
       })
     );
   };
-
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      dispatch(GoogleLogin(tokenResponse));
+    },
+    onError: (error) => {
+      showSnackbar("google");
+      console.log(error);
+    },
+  });
   const githubLogin = async () => {
     try {
       const code = await getOAuthCode(
@@ -68,7 +76,7 @@ const AuthSocial = () => {
         OR
       </Divider>
       <Stack direction={"row"} spacing={2} justifyContent={"center"}>
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={() => googleLogin()}>
           <GoogleLogo color="#DF3E30" />
         </IconButton>
         <IconButton color="inherit" onClick={() => githubLogin()}>
